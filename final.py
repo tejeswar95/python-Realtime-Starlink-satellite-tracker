@@ -5,6 +5,9 @@ import sqlite3
 import math
 import time 
 import random
+import serial
+
+ardData=serial.Serial('com3',9600)
 
 start=time.perf_counter()
 
@@ -17,8 +20,8 @@ dataAzi=[]
 dataAl=[]
 sat=[]
 
-with conn:
-    cursor.execute("DROP TABLE data")
+#with conn:
+#    cursor.execute("DROP TABLE data")
     
 cursor.execute("""CREATE TABLE IF NOT EXISTS data (
                name string,
@@ -108,7 +111,7 @@ def getValue():
         cursor.execute("SELECT * FROM data WHERE name = ?",(TrackObject,))
         return cursor.fetchone()
     
-with open('gph.php','r') as file:
+with open('gp.php','r') as file:
     content=file.readlines()
     print('Loaded', int(len(content)/3), 'satellites')
 
@@ -143,6 +146,12 @@ for k in range(60):
     #if(k%7==0):
        # switchObject()
     tempList=getValue()
+    azi=int(tempList[1])
+    al=int(tempList[2])
+    if(azi%5==0 and al%5==0 ):
+        cmd=str(azi)+'+'+str(al)+'\r'
+        print(cmd)
+        ardData.write(cmd.encode())
     dataAzi.append(tempList[1])
     dataAl.append(tempList[2])
     #displayTable()        
