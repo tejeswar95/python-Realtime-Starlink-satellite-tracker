@@ -122,8 +122,9 @@ bluffton = wgs84.latlon(12.933851, 77.691874,920)
 clearTable()
 ts = load.timescale()
 for k in range(60):
-    #t=ts.now()
-    t=ts.utc(2024,1,17,17,k,0)
+    t=ts.now()
+    #t=ts.utc(2024,1,17,17,k,0)
+
     for i in by_number:
             
             satellite = by_number[i]
@@ -132,19 +133,17 @@ for k in range(60):
             topocentric = difference.at(t)
             alt, az, distance = topocentric.altaz()
             count=count+1
-            if alt.degrees > 10:
+            if alt.degrees > 20:
                 insertQ(i,az.degrees,alt.degrees)
             else:
                # if(i==TrackObject):
-                   # switchObject()
+                # switchObject()
                 deleteQ(i)
                 #calculateRD(TrackObject)
-    num=random.randint(1,10)   
+    #num=random.randint(1,10)   
     if(k==0):
         TrackObject=get1st()    
     calculateRD(TrackObject)
-    #if(k%7==0):
-       # switchObject()
     tempList=getValue()
     azi=int(tempList[1])
     al=int(tempList[2])
@@ -163,7 +162,8 @@ print(dataAzi)
 print(sat)
 sat=list(set(sat))
 x=list(range(len(dataAzi)))
-
+cmd="0+90"+'\r'
+ardData.write(cmd.encode())
 final=time.perf_counter()
 print('Finished in',round(final-start,2),'seconds')
 
