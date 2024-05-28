@@ -148,6 +148,8 @@ for k in range(60):
     tempList=getValue()
     azi=int(tempList[1])
     al=int(tempList[2])
+    azi=azi-azi%5
+    al=al-al%5
     if(azi%5==0 and al%5==0 ):
         cmd=str(azi)+'+'+str(al)+'\r'
         print(cmd)
