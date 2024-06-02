@@ -8,7 +8,7 @@ CurrentSat=[]
 temp=0
 stations_url = 'https://celestrak.org/NORAD/elements/gp.php?GROUP=starlink&FORMAT=tle'
 satellites = load.tle_file(stations_url)
-print('Loaded', len(satellites), 'satellites')
+print('Loaded', len(satellites)/3, 'satellites')
 by_number = {sat.model.satnum: sat for sat in satellites}
 bluffton = wgs84.latlon(12.933851, 77.691874,920)
 

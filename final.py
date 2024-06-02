@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import sqlite3
 import math
 import time 
-import random
 import serial
 
 ardData=serial.Serial('com3',9600)
@@ -111,7 +110,7 @@ def getValue():
         cursor.execute("SELECT * FROM data WHERE name = ?",(TrackObject,))
         return cursor.fetchone()
     
-with open('gp.php','r') as file:
+with open('gph.php','r') as file:
     content=file.readlines()
     print('Loaded', int(len(content)/3), 'satellites')
 
@@ -151,7 +150,7 @@ for k in range(60):
     al=al-al%5
     if(azi%5==0 and al%5==0 ):
         cmd=str(azi)+'+'+str(al)+'\r'
-        print(cmd)
+        #print(cmd)
         ardData.write(cmd.encode())
     dataAzi.append(tempList[1])
     dataAl.append(tempList[2])
